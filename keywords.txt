@@ -1,12 +1,12 @@
 #######################################
-# Syntax Coloring Map FrequencyTimer2
+# Syntax Coloring Map TimerTwo
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-FrequencyTimer2  KEYWORD1
+TimerTwo KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -21,4 +21,4 @@ setOnOverflow KEYWORD2
 # Constants (LITERAL1)
 #######################################
 
-FREQUENCYTIMER2_PIN	LITERAL1
+TIMER2_PIN	LITERAL1

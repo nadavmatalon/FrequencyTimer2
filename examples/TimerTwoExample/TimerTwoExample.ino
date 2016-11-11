@@ -1,7 +1,6 @@
-// FrequencyTimer2 Test
-// http://www.arduino.cc/playground/Code/FrequencyTimer2
+TimerTwo Example
 
-#include <FrequencyTimer2.h>
+#include <TimerTwo.h>
 
 void setup() {
   pinMode(FREQUENCYTIMER2_PIN, OUTPUT);
@@ -69,4 +68,5 @@ void loop() {
     }
   }
 }
+
 
