@@ -1,9 +1,9 @@
-TimerTwo Example
+//TimerTwo Example
 
 #include <TimerTwo.h>
 
 void setup() {
-  pinMode(FREQUENCYTIMER2_PIN, OUTPUT);
+  pinMode(TIMER2_PIN, OUTPUT);
 
   Serial.begin(9600);
   delay(2);
@@ -13,8 +13,8 @@ void setup() {
   Serial.println("  n - turn off the overflow function");
   Serial.println("  b - print the counter from the oveflow function");
   Serial.println();
-  FrequencyTimer2::setPeriod(200);
-  FrequencyTimer2::enable();
+  TimerTwo::setPeriod(200);
+  TimerTwo::enable();
 }
 
 // variables shared between interrupt context and main program
@@ -34,29 +34,29 @@ void loop() {
         v = v * 10 + ch - '0';
         break;
       case 'p':
-        FrequencyTimer2::setPeriod(v);
+        TimerTwo::setPeriod(v);
         Serial.print("set ");
         Serial.print((long)v, DEC);
         Serial.print(" = ");
-        Serial.print((long)FrequencyTimer2::getPeriod(), DEC);
+        Serial.print((long)TimerTwo::getPeriod(), DEC);
         Serial.println();
         v = 0;
         break;
       case 'r':
         Serial.print("period is ");
-        Serial.println(FrequencyTimer2::getPeriod());
+        Serial.println(TimerTwo::getPeriod());
         break;
       case 'e':
-        FrequencyTimer2::enable();
+        TimerTwo::enable();
         break;
       case 'd':
-        FrequencyTimer2::disable();
+        TimerTwo::disable();
         break;
       case 'o':
-        FrequencyTimer2::setOnOverflow(Burp);
+        TimerTwo::setOnOverflow(Burp);
         break;
       case 'n':
-        FrequencyTimer2::setOnOverflow(0);
+        TimerTwo::setOnOverflow(0);
         break;
       case 'b':
         unsigned long count;
@@ -68,5 +68,4 @@ void loop() {
     }
   }
 }
-
 

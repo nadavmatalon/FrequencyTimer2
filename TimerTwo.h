@@ -1,70 +1,84 @@
-#ifndef FREQUENCYTIMER2_IS_IN
-#define FREQUENCYTIMER2_IS_IN
+/*==============================================================================================================*
+ 
+    @file     TimerTwo.h
+    @author   Nadav Matalon
+    @license  MIT (c) 2016 Nadav Matalon
 
-/*
-  FrequencyTimer2.h - A frequency generator and interrupt generator library
-  Author: Jim Studt, jim@federated.com
-  Copyright (c) 2007 David A. Mellis.  All right reserved.
+    Timer2 Interrupt & Frequency Generator 
 
-  http://www.arduino.cc/playground/Code/FrequencyTimer2
+    Ver. 1.0.0 - Modified code from FrequencyTimer2 by J. Studt (11.11.16)
+                 (http://www.arduino.cc/playground/Code/FrequencyTimer2)
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+ *===============================================================================================================*
+    LICENSE
+ *===============================================================================================================*
+ 
+    The MIT License (MIT)
+    Copyright (c) 2016 Nadav Matalon
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+    documentation files (the "Software"), to deal in the Software without restriction, including without
+    limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+    the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
+    conditions:
 
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+    The above copyright notice and this permission notice shall be included in all copies or substantial
+    portions of the Software.
 
-#if ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+    LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ 
+ *==============================================================================================================*/
+
+#if 1
+__asm volatile ("nop");
 #endif
 
-// Arduino Mega
-#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-#define FREQUENCYTIMER2_PIN  10
+#ifndef TimerTwo_h
+#define TimerTwo_h
 
-// Teensy++
-#elif defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__)
-#define FREQUENCYTIMER2_PIN  24
+#include <avr/interrupt.h>
+#include <Arduino.h>
 
-// Teensy 3.0 & 3.1
-#elif defined(__MK20DX128__) || defined(__MK20DX256__)  || defined(__MK64FX512__) || defined(__MK66FX1M0__)
-#define FREQUENCYTIMER2_PIN  5
+namespace Timertwo {
 
-// Sanguino
-#elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644__)
-#define FREQUENCYTIMER2_PIN  15
+    // Arduino Mega
+    #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+    #define TIMER2_PIN  10
 
-// Arduino Uno, Duemilanove, Diecimila, etc
-#else
-#define FREQUENCYTIMER2_PIN  11
-#endif
+    // Teensy++
+    #elif defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__)
+    #define TIMER2_PIN  24
 
+    // Teensy 3.0 & 3.1
+    #elif defined(__MK20DX128__) || defined(__MK20DX256__)  || defined(__MK64FX512__) || defined(__MK66FX1M0__)
+    #define TIMER2_PIN  5
 
+    // Sanguino
+    #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644__)
+    #define TIMER2_PIN  15
 
-class FrequencyTimer2
-{
-  private:
-    static uint8_t enabled;
-  public:
-    static void (*onOverflow)(); // not really public, but I can't work out the 'friend' for the SIGNAL
-    
-  public:
-    static void setPeriod(unsigned long);
-    static unsigned long getPeriod();
-    static void setOnOverflow( void (*)() );
-    static void enable();
-    static void disable();
-};
+    // Arduino Uno, Duemilanove, Diecimila, etc
+    #else
+    #define TIMER2_PIN  11
+    #endif
+
+    class TimerTwo {
+        public:
+            static void (*onOverflow)(); // not really public, but I can't work out the 'friend' for the SIGNAL
+            static void setPeriod(unsigned long);
+            static unsigned long getPeriod();
+            static void setOnOverflow( void (*)() );
+            static void enable();
+            static void disable();
+        private:
+            static uint8_t enabled;
+    };
+}
+
+using namespace Timertwo;
 
 #endif
