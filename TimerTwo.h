@@ -43,28 +43,10 @@ __asm volatile ("nop");
 #include <avr/interrupt.h>
 #include <Arduino.h>
 
+#define TIMER2_PIN  11
+
 namespace Timertwo {
 
-    // Arduino Mega
-    #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-    #define TIMER2_PIN  10
-
-    // Teensy++
-    #elif defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__)
-    #define TIMER2_PIN  24
-
-    // Teensy 3.0 & 3.1
-    #elif defined(__MK20DX128__) || defined(__MK20DX256__)  || defined(__MK64FX512__) || defined(__MK66FX1M0__)
-    #define TIMER2_PIN  5
-
-    // Sanguino
-    #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644__)
-    #define TIMER2_PIN  15
-
-    // Arduino Uno, Duemilanove, Diecimila, etc
-    #else
-    #define TIMER2_PIN  11
-    #endif
 
     class TimerTwo {
         public:
